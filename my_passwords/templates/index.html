@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+<h1>Password List</h1>
+    <table>
+    <tr>
+        <th>Name</th>
+        <th>Organization</th>
+        <th>Link</th>
+        <th>Category</th>
+        <th></th>
+    </tr>
+    {% for account in accounts %}
+    <tr>
+        <td width=150>{{account.name}}</td>
+        <td width=200>{{account.site}}</td>
+        <td width=300><a href="{{account.html}}" target="_blank">{{account.html}}</a></td>
+        <td width=200>{{account.category.name}}</td>
+        <td><a href="{% url 'detail' account.id %}">view</a></td>
+    </tr>
+    {% endfor %}
+    </table>
+{% endblock %}

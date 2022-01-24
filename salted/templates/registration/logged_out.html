@@ -1,0 +1,8 @@
+<!--salted/templates/registration/logged_out.html-->
+{% extends 'base.html' %}
+
+{% block page_content %}
+You have been successfully logged out. Good day to you.
+<br>
+Please feel free to <a href="{% url 'login' %}">login</a> again whenever you please.
+{% endblock %}

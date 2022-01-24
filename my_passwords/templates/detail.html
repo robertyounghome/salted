@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+
+<table>
+<tr>
+    <td>Name</td>
+    <td>{{account.name}}</td>
+</tr>
+<tr>
+    <td>Organization</td>
+    <td>{{account.site}}</td>
+</tr>
+<tr>
+    <td>HTML</td>
+    <td>{{account.html}}</td>
+</tr>
+<tr>
+    <td>Login ID</td>
+    <td>{{account.username}}</td>
+</tr>
+<tr>
+    <td>Password</td>
+    <td>{{account.password}}</td>
+</tr>
+<tr>
+    <td>Date Created</td>
+    <td>{{account.created_at}}</td>
+</tr>
+<tr>
+    <td>Date Last Updated</td>
+    <td>{{account.updated_at}}</td>
+</tr>
+<tr>
+    <td>Category</td>
+    <td>{{account.category.name}}</td>
+</tr>
+
+</table>
+
+{% endblock %}

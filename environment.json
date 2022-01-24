@@ -1,0 +1,5 @@
+{
+    "USER": "bob",
+    "PASSWORD": "gaston",
+    "ENCRYPTION_KEY" : "abcdef1234567890"
+}
