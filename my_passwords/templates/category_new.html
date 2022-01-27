@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 {% block page_content %}
-<form action = "{% url 'new' %}" method = "post">
+<form action = "{% url 'category_new' %}" method = "post">
     {% csrf_token %}
     <table>
-    {{form.as_table }}
+    {{form.as_p }}
     </table>
     <input type="submit" value="Submit">
 </form>

@@ -10,4 +10,8 @@ urlpatterns = [
     path('new/', views.new, name="new"),
     path('thanks/', views.thanks, name="thanks"),
     path('about/', views.AboutView.as_view(), name="about"),
+    path('category/', views.category_index, name="category_index"),
+    path('category/new/', views.category_new, name='category_new'),
+    path('category/<int:category_id>/', views.category_detail, name="category_detail"),
+    path('<int:account_id>/edit/', views.edit, name='edit'),
 ]

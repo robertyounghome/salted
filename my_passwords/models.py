@@ -6,6 +6,9 @@ DEFAULT_USER_ID = 1
 
 class Category(models.Model):
     name = models.CharField(max_length=30)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        default=DEFAULT_USER_ID)
 
     def __str__(self):
         return self.name

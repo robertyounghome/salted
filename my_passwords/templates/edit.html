@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+
+<form>
+  <div class="mb-3">
+    <label for="name" class="form-label">Name</label>
+    <input type="text" class="form-control" id="name">
+  </div>
+  <div class="mb-3">
+    <label for="site" class="form-label">Site</label>
+    <input type="text" class="form-control" id="site">
+  </div>
+  <div class="mb-3">
+    <label for="html" class="form-label">URL</label>
+    <input type="url" class="form-control" id="html">
+  </div>
+  <div class="mb-3">
+    <label for="username" class="form-label">Login ID</label>
+    <input type="text" class="form-control" id="username">
+  </div>
+  <div class="mb-3">
+    <label for="password" class="form-label">Password</label>
+    <input type="password" class="form-control" id="password">
+  </div>
+  <div class="mb-3">
+    <input type="submit" class="form-control" id="submit">
+  </div>
+</form>
+
+<a href="{% url 'index' %}">Return to the Password List</a>
+
+{% endblock %}
