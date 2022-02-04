@@ -27,7 +27,7 @@ def get_secret(setting, secrets=secrets):
     try:
         return secrets[setting]
     except KeyError:
-        raise ImproperlyConfigured("Set the {} setting".format(setting))
+        raise ImproperlyConfigured(f"Set the {setting} setting")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'coverage',
 ]
 
 MIDDLEWARE = [
@@ -102,9 +103,23 @@ DATABASES = {
 
     'default': {
 
+        'ENGINE': get_secret('ENGINE'),
+
+        'NAME': get_secret('DATABASE'),
+
+        'USER': get_secret('USER'),
+
+        'PASSWORD': get_secret('PASSWORD'),
+
+        'HOST': get_secret('SERVER'),
+
+        'PORT': get_secret('PORT'),
+
+    },
+    'TEST': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
 
-        'NAME': 'salted',
+        'NAME': 'salted_test',
 
         'USER': get_secret('USER'),
 
@@ -113,8 +128,7 @@ DATABASES = {
         'HOST': '127.0.0.1',
 
         'PORT': '5432',
-
-    }
+    },
 }
 
 

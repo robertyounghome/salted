@@ -1,9 +1,12 @@
 <!--salted/templates/registration/login.html-->
-{% extends "base.html" %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'my_passwords/style.css' %}"/>
+<!-- <div class="row first-info" style="background-image: url({% static 'my_passwords/opalescent.jpg' %})" > -->
+  <html class="bg-img">
 
-{% block page_content %}
-
-  {% if form.errors %}
+  <form method="post" action="{% url 'login' %}" class="container">
+    <h1>Login</h1>
+    {% if form.errors %}
     <p>Your username and password didn't match. Please try again.</p>
   {% endif %}
 
@@ -16,7 +19,6 @@
     {% endif %}
   {% endif %}
 
-  <form method="post" action="{% url 'login' %}">
     {% csrf_token %}
     <table>
       <tr>
@@ -28,11 +30,11 @@
         <td>{{ form.password }}</td>
       </tr>
     </table>
-    <input type="submit" value="login" />
+    <input id="submit" type="submit" value="login" />
     <input type="hidden" name="next" value="{{ next }}" />
+
+    {# Assumes you setup the password_reset view in your URLconf #}
+    <p><a href="{% url 'password_reset' %}">Lost password?</a></p>
   </form>
 
-  {# Assumes you setup the password_reset view in your URLconf #}
-  <p><a href="{% url 'password_reset' %}">Lost password?</a></p>
-
-{% endblock %}
+</html>

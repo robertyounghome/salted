@@ -4,7 +4,10 @@
 # Turns out the user object was already available.
 def add_user(request):  
     user = request.user
-    name = user.first_name
+    if user.is_authenticated:
+        name = user.first_name
+    else:
+        name = 'Anonymous'
     # return {
     #     'user': user,
     #     'name': name,
