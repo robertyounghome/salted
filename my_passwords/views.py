@@ -60,7 +60,7 @@ def new(request):
     if request.method == 'POST':
         form = AccountForm(request.POST)
         if form.is_valid():
-            cleaned_data = super(form, self).clean()
+            # cleaned_data = super(form, self).clean()
             encrypted_password = E.encrypt(form.cleaned_data['password'])
             c = Category.objects.get(id=form.cleaned_data['category'])
             account = Account(name=form.cleaned_data['name'], 

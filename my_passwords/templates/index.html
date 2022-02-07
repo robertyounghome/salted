@@ -17,8 +17,10 @@
         <td width=200>{{account.site}}</td>
         <td width=300><a href="{{account.html}}" target="_blank">{{account.html}}</a></td>
         <td width=200>{{account.category.name}}</td>
-        <td><a href="{% url 'detail' account.id %}">view</a></td>
-        <td><a href="{% url 'edit' account.id %}">edit</a></td>
+        <td></td>
+        <td><a href="{% url 'detail' account.id %}" alt="view"><span class="iconify" data-icon="carbon:view"></span></a>
+            &nbsp;&nbsp;
+            <a href="{% url 'edit' account.id %}" alt="detail"><span class="iconify" data-icon="akar-icons:edit"></span></a></td>
     </tr>
     {% endfor %}
     </table>

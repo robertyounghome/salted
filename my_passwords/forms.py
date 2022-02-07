@@ -3,13 +3,38 @@ from django import forms
 from .models import Account, Category
    
 # creating a form 
-class AccountForm(forms.Form):
-    # class Meta:
-    #     model = Account
-    #     fields = ('name', 'site', 'html', 'username', 'password', 'category')
+# class AccountForm(forms.Form):
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Layout, Fieldset, ButtonHolder, Submit
 
-    # def __init__(self, *args, **kwargs):
-    #     super().__init__(*args, **kwargs)
+class AccountForm(forms.Form):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper(self)
+
+        self.helper.form_id = 'id-accountForm'
+        self.helper.form_class = 'blueForms'
+        self.helper.form_method = 'post'
+        self.helper.form_action = ''
+
+        # self.helper.add_input(Submit('submit', 'Submit'))
+
+        self.helper.form_class = 'form-horizontal'
+        self.helper.label_class = 'col-lg-2'
+        self.helper.field_class = 'col-lg-8'
+        self.helper.layout = Layout(Fieldset(
+            'New Login Creation',
+            'name',
+            'site',
+            'html',
+            'username',
+            'password',
+            'password_confirmation',
+            'category',
+        ),
+        ButtonHolder(
+            Submit('submit', 'Submit', css_class='button white')
+        ))     
     def getCategories():
         return ((x.id, x.name) for x in Category.objects.all())
 
