@@ -5,6 +5,10 @@
 <script src="https://code.iconify.design/2/2.1.2/iconify.min.js"></script>
 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+{% load static %}
+<!-- <link rel="stylesheet" type="text/css" href="{% static 'my_passwords/style.css' %}"> -->
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
       <a class="navbar-brand" href="#">Salted</a>
@@ -68,7 +72,7 @@
       <!-- Grid column -->
       <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
         <h6 class="text-uppercase mb-4 font-weight-bold">Salted</h6>
-        <p>A Django project to safely store my various login ids and passwords, featuring a secure login with a hashed password authentication, and encrypted data stored in a Postgres database. Front end features crispy forms and bootstrap.</p>
+        <p>A Django project to safely store my various login ids and passwords, featuring a secure login with a hashed password authentication, and encrypted data stored in a Postgres database. Front end features crispy forms, bootstrap, and JQuery. Tested with unit tests and Selenium.</p>
       </div>
       <!-- Grid column -->
 
@@ -89,9 +93,16 @@
           <a href="https://django-crispy-forms.readthedocs.io/en/latest/index.html" target="_blank">Crispy Forms</a>
         </p>
         <p>
-          <span class="iconify" data-icon="simple-icons:iconify"></span>
-          <a href="https://iconify.design/" target="_blank">Iconify</a>
+          <span class="iconify" data-icon="logos:stackoverflow-icon"></span>
+          <a href="https://stackoverflow.com/" target="_blank">Stack Overflow</a>
         </p>
+        <p>
+        <span class="iconify" data-icon="simple-icons:iconify"></span>
+        <a href="https://iconify.design/" target="_blank">Iconify</a>
+        </p>
+        <p>
+        <span class="iconify" data-icon="akar-icons:jquery-fill"></span>
+        <a href="https://jquery.com/" target="_blank">jQuery</a>
       </div>
       <!-- Grid column -->
 
@@ -113,6 +124,14 @@
         <p>
         <span class="iconify" data-icon="logos:selenium"></span>
         <a href="https://www.selenium.dev/documentation/" target="_blank">Selenium</a>
+        </p>
+        <p>
+        <span class="iconify" data-icon="logos:postgresql"></span>
+        <a href="https://www.postgresql.org/" target="_blank">Postgres</a>
+        </p>
+        <p>
+        <span class="iconify" data-icon="logos:heroku-icon"></span>
+        <a href="https://www.heroku.com/" target="_blank">Heroku</a>
         </p>
       </div>
 

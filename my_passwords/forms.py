@@ -7,9 +7,12 @@ from .models import Account, Category
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset, ButtonHolder, Submit
 
-class AccountForm(forms.Form):
-    def __init__(self, *args, **kwargs):
+class AccountForm(forms.ModelForm):
+    def __init__(self, page_name, *args, **kwargs):
+        password = kwargs.pop('password', None)
         super().__init__(*args, **kwargs)
+        self.fields['password'] = forms.CharField(initial=password, required=True, max_length=50)
+
         self.helper = FormHelper(self)
 
         self.helper.form_id = 'id-accountForm'
@@ -23,13 +26,12 @@ class AccountForm(forms.Form):
         self.helper.label_class = 'col-lg-2'
         self.helper.field_class = 'col-lg-8'
         self.helper.layout = Layout(Fieldset(
-            'New Login Creation',
+            page_name,
             'name',
             'site',
             'html',
             'username',
             'password',
-            'password_confirmation',
             'category',
         ),
         ButtonHolder(
@@ -38,16 +40,26 @@ class AccountForm(forms.Form):
     def getCategories():
         return ((x.id, x.name) for x in Category.objects.all())
 
-    name = forms.CharField(max_length=50)
-    site = forms.CharField(max_length=30)
-    html = forms.CharField(max_length=100)
-    username = forms.CharField(max_length=50)
-    password = forms.CharField(widget = forms.PasswordInput(),
-        max_length=50)
-    password_confirmation = forms.CharField(widget=forms.PasswordInput(), 
-        max_length=50)
-    category = forms.CharField(widget = forms.Select(choices=getCategories()), 
-        max_length=50)
+    # name = forms.CharField(max_length=50)
+    # site = forms.CharField(max_length=30)
+    # html = forms.CharField(max_length=100)
+    # username = forms.CharField(max_length=50)
+    # password = forms.CharField(widget = forms.PasswordInput(),
+    #     max_length=50)
+    # password_confirmation = forms.CharField(widget=forms.PasswordInput(), 
+    #     max_length=50)
+    # category = forms.CharField(widget = forms.Select(choices=getCategories()), 
+    #     max_length=50)
+
+    class Meta:
+        model = Account
+        fields = (
+            'name',
+            'site',
+            'html',
+            'username',
+            'category'
+        )
 
 class CategoryForm(forms.Form):
     name = forms.CharField(max_length=50)
