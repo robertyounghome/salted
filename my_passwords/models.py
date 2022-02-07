@@ -18,7 +18,7 @@ class Account(models.Model):
     site = models.CharField(max_length=50)
     html = models.CharField(max_length=150)
     username = models.CharField(max_length=50)
-    password = models.BinaryField()
+    password = models.BinaryField(editable=True, max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL,

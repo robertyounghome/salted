@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'coverage',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -181,3 +182,5 @@ EMAIL_PORT = 1025
 
 # AES encryption key 
 ENCRYPTION_KEY = get_secret("ENCRYPTION_KEY").encode('utf-8')
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

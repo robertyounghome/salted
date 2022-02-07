@@ -1,4 +1,5 @@
 
+<<<<<<< HEAD
   body, html {
     -webkit-background-size: cover;
     -moz-background-size: cover;
@@ -62,3 +63,8 @@
   .btn:hover {
     opacity: 1;
   }
+=======
+  .table-hover tbody tr:hover td {
+    background: blue;
+  }
+>>>>>>> development
