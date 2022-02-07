@@ -1,0 +1,21 @@
+[
+    {
+        "model": "auth.user",
+        "pk": 1,
+        "fields": {
+            "password": "pbkdf2_sha256$320000$wNnggCTVcDKYpQ8cScXGqA$lde6fVm4BhwWY7zReg2sRj08fVwC3ySYqlLTmp4HYFs=",
+            "last_login": "2022-02-03T19:12:49Z",
+            "is_superuser": true,
+            "username": "testuser",
+            "first_name": "John",
+            "last_name": "Lennon",
+            "email": "johnlennon@gmail.com",
+            "is_staff": true,
+            "is_active": true,
+            "date_joined": "2022-02-03T19:11:52Z",
+            "groups": [],
+            "user_permissions": []
+        }
+    }
+]
+    
