@@ -11,7 +11,17 @@ class AccountForm(forms.ModelForm):
     def __init__(self, page_name, *args, **kwargs):
         password = kwargs.pop('password', None)
         super().__init__(*args, **kwargs)
+
+        # Work around to make password editable since it is a non-editable BinaryField
         self.fields['password'] = forms.CharField(initial=password, required=True, max_length=50)
+        
+        if page_name == 'View a Login':
+            self.fields['name'].disabled = True
+            self.fields['site'].disabled = True 
+            self.fields['html'].disabled = True 
+            self.fields['username'].disabled = True 
+            self.fields['password'].disabled = True 
+            self.fields['category'].disabled = True
 
         self.helper = FormHelper(self)
 
@@ -25,18 +35,31 @@ class AccountForm(forms.ModelForm):
         self.helper.form_class = 'form-horizontal'
         self.helper.label_class = 'col-lg-2'
         self.helper.field_class = 'col-lg-8'
-        self.helper.layout = Layout(Fieldset(
-            page_name,
-            'name',
-            'site',
-            'html',
-            'username',
-            'password',
-            'category',
-        ),
-        ButtonHolder(
-            Submit('submit', 'Submit', css_class='button white')
-        ))     
+
+        if page_name == 'View a Login':
+            self.helper.layout = Layout(Fieldset(
+                page_name,
+                'name',
+                'site',
+                'html',
+                'username',
+                'password',
+                'category'
+            ))
+        else:
+            self.helper.layout = Layout(Fieldset(
+                page_name,
+                'name',
+                'site',
+                'html',
+                'username',
+                'password',
+                'category'
+            ),
+            ButtonHolder(
+                Submit('submit', 'Submit', css_class='button white')
+            ))     
+
     def getCategories():
         return ((x.id, x.name) for x in Category.objects.all())
 

@@ -1,4 +1,33 @@
+body, html {
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+  }
+  
+  * {
+    box-sizing: border-box;
+  }
+  
+  .bg-img {
+    /* The image used */
+    background-image: url('/static/my_passwords/opalescent.jpg');
+  
+    /* Control the height of the image */
+    min-height: 380px;
+  
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+  }
 
   .table-hover tbody tr:hover td {
     background: blue;
+    color: white;
+  }
+    .table-hover tbody tr:hover a {
+      color: white
+    }
   }

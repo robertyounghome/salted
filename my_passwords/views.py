@@ -1,4 +1,4 @@
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import get_object_or_404, render
 from django.template import RequestContext
 from django.views.generic import TemplateView
@@ -7,9 +7,15 @@ from .forms import AccountForm, CategoryForm
 from django.http import HttpResponseRedirect
 from django.template import RequestContext
 import salted.encryption as E
+from django.core.paginator import Paginator
 
 # RequestContext(request, {'message': 'I am the second view.'},
 #             processors=[custom_proc])
+
+def is_correct_user(request):
+    # account = Account.objects.all.get(pk=account_id)
+    # return account and account.user == request.user
+    return True
 
 def add_to_context(request):  
     user = request.user
@@ -21,12 +27,18 @@ def add_to_context(request):
 
 @login_required(login_url='login')
 def index(request):
+    context = {}
     try:
         accounts = Account.objects.filter(user = request.user.id)
     except Account.DoesNotExist:
         accounts = None
-    c = RequestContext(request,processors=[add_to_context])
-    return render(request, 'index.html', {'accounts': accounts})
+    paginator = Paginator(accounts, 8)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    context['page_obj'] = page_obj
+    context['accounts'] = accounts
+    c = RequestContext(request, processors=[add_to_context])
+    return render(request, 'index.html', context)
 
 def category_index(request):
     try:
@@ -51,10 +63,15 @@ def category_new(request):
         context['form']= CategoryForm()
         return render(request, 'category_new.html', context)   
 
+@login_required(login_url='login')
+@user_passes_test(lambda request: is_correct_user, login_url="login")
 def detail(request, account_id):
     account = get_object_or_404(Account, pk=account_id)
-    account.password = E.decrypt(account.password)
-    return render(request, 'detail.html', {'account': account})
+    password = E.decrypt(account.password)
+    context ={}
+    context['form']= AccountForm("View a Login", instance=account, password=password)
+    context['account'] = account
+    return render(request, 'new.html', context)
 
 def new(request):
     if request.method == 'POST':
