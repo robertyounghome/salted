@@ -2,11 +2,15 @@
 
 {% block page_content %}
 <h1>Categories</h1>
-    <table>
+    <table class="table">
     {% for category in categories %}
         <tr>
-            <td>{{category.name}}</td>
-            <td><a href="{% url 'category_detail' category.id %}">Edit</a></td>
+            <td width="300">{{category.name}}</td>
+            <td>
+            <a href="{% url 'category_detail' category.id %}" alt="detail"><span class="iconify" data-icon="akar-icons:edit"></span></a>
+            &nbsp;&nbsp;
+            <a class="confirm-delete" href="{% url 'category_delete' category.id %}" data-object-id="{{category.id}}"><span class="iconify" data-icon="fluent:delete-dismiss-24-regular"></span></a>
+            </td>
         </tr>
     {% endfor %}
     </table>

@@ -5,12 +5,9 @@ from django.views.generic import TemplateView
 from .models import Account, Category
 from .forms import AccountForm, CategoryForm
 from django.http import HttpResponseRedirect
-from django.template import RequestContext
 import salted.encryption as E
 from django.core.paginator import Paginator
-
-# RequestContext(request, {'message': 'I am the second view.'},
-#             processors=[custom_proc])
+from django.urls import reverse 
 
 def is_correct_user(request):
     # account = Account.objects.all.get(pk=account_id)
@@ -29,7 +26,7 @@ def add_to_context(request):
 def index(request):
     context = {}
     try:
-        accounts = Account.objects.filter(user = request.user.id)
+        accounts = Account.objects.filter(user = request.user.id).order_by('category', 'name')
     except Account.DoesNotExist:
         accounts = None
     paginator = Paginator(accounts, 8)
@@ -45,37 +42,60 @@ def category_index(request):
         categories = Category.objects.filter(user = request.user.id)
     except Category.DoesNotExist:
         categories = None
-    return render(request, 'category_index.html', {'categories': categories}) 
+    return render(request, "category_index.html", {'categories': categories}) 
 
 def category_detail(request, category_id):
     category = get_object_or_404(Category, pk=category_id)
-    return render(request, 'category_detail.html', {'category': category})
+    if category.user != request.user:
+        return HttpResponseRedirect(reverse("login"))
+    if request.method == 'POST':
+        form = CategoryForm(request.POST, user=request.user)
+        if form.is_valid():
+            category.name = form.cleaned_data['name']
+            category.user = request.user
+            category.save()
+            return HttpResponseRedirect("/thanks/")
+    else:
+        context = {}
+        context['form']= CategoryForm(page_name="Edit a Category", instance=category, user=request.user)
+        context['category'] = category
+        return render(request, 'new.html', context)
 
 def category_new(request):
     if request.method == 'POST':
-        form = CategoryForm(request.POST)
+        form = CategoryForm(request.POST, user=request.user)
         if form.is_valid():
-            category = Category(name=form.cleaned_data['name'])
+            category = Category(name=form.cleaned_data['name'],
+                user=request.user)
             category.save()
             return HttpResponseRedirect("/thanks/")
     else:
         context ={}
-        context['form']= CategoryForm()
-        return render(request, 'category_new.html', context)   
+        context['form']= CategoryForm(page_name="Add a Category", user=request.user)
+        return render(request, 'new.html', context)   
+
+def category_delete(request, category_id):
+    category = get_object_or_404(Category, pk=category_id)
+    if category.user != request.user:
+        return HttpResponseRedirect("/accounts/login/")
+    category.delete()
+    return render(request, 'thanks.html', {})
 
 @login_required(login_url='login')
-@user_passes_test(lambda request: is_correct_user, login_url="login")
+# @user_passes_test(lambda request: is_correct_user, login_url="login")
 def detail(request, account_id):
     account = get_object_or_404(Account, pk=account_id)
+    if account.user != request.user:
+        return HttpResponseRedirect("/accounts/login/")
     password = E.decrypt(account.password)
-    context ={}
-    context['form']= AccountForm("View a Login", instance=account, password=password)
+    context = {}
+    context['form'] = AccountForm(page_name="View a Login", instance=account, password=password, user=request.user)
     context['account'] = account
     return render(request, 'new.html', context)
 
 def new(request):
     if request.method == 'POST':
-        form = AccountForm('', request.POST, password=request.POST.get('password'))
+        form = AccountForm(request.POST, password=request.POST.get('password'), user=request.user)
         if form.is_valid():
             # cleaned_data = super(form, self).clean()
             encrypted_password = E.encrypt(form.cleaned_data['password'])
@@ -90,13 +110,15 @@ def new(request):
             return HttpResponseRedirect("/thanks/")
     else:
         context ={}
-        context['form']= AccountForm("Create a Login")
+        context['form']= AccountForm(page_name="Create a Login", user=request.user)
         return render(request, 'new.html', context)
 
 def edit(request, account_id):
     account = get_object_or_404(Account, pk=account_id)
+    if account.user != request.user:
+        return HttpResponseRedirect("/accounts/login/")
     if request.method == 'POST':
-        form = AccountForm('', request.POST, password=request.POST.get('password'))
+        form = AccountForm(request.POST, password=request.POST.get('password'), user=request.user)
         if form.is_valid():
             encrypted_password = E.encrypt(form.cleaned_data['password'])
             account.name=form.cleaned_data['name']
@@ -111,11 +133,16 @@ def edit(request, account_id):
         password = E.decrypt(account.password)
         # return render(request, 'edit.html', {'account': account})
         context ={}
-        context['form']= AccountForm("Edit a Login", instance=account, password=password)
+        context['form']= AccountForm(page_name="Edit a Login", 
+            instance=account, password=password, user=request.user)
         context['account'] = account
         return render(request, 'new.html', context)
 
-def delete(request):
+def delete(request, account_id):
+    account = get_object_or_404(Account, pk=account_id)
+    if account.user != request.user:
+        return HttpResponseRedirect("/accounts/login/")
+    account.delete()
     return render(request, 'thanks.html', {})
 
 def thanks(request):

@@ -2,5 +2,11 @@
 {% load crispy_forms_tags %}
 {% crispy example_form example_form.helper %}
 {% block page_content %}
+{{ form.page_name }}
 {% crispy form %}
+{% if form.page_name == 'View a Login' %}
+    <a href="{% url 'edit' account.id %}">Edit this Login</a>
+{% elif form.page.name == 'View a Category' %}
+    <a href="{% url 'category_edit' category.id %}">Edit this Category</a>
+{% endif %}
 {% endblock %}

@@ -22,7 +22,7 @@
             &nbsp;&nbsp;
             <a href="{% url 'edit' account.id %}" alt="detail"><span class="iconify" data-icon="akar-icons:edit"></span></a>
             &nbsp;&nbsp;
-            <a href="{%url 'delete' account.id %}" alt="delete"><span class="iconify" data-icon="fluent:delete-dismiss-24-regular"></span></a></td>
+            <a class="confirm-delete" href="{% url 'delete' account.id %}" data-object-id="{{account.id}}"><span class="iconify" data-icon="fluent:delete-dismiss-24-regular"></span></a></td>
     </tr>
     {% endfor %}
     </table>

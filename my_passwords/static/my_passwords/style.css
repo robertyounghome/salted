@@ -1,33 +1,6 @@
-body, html {
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-  }
-  
-  * {
-    box-sizing: border-box;
-  }
-  
-  .bg-img {
-    /* The image used */
-    background-image: url('/static/my_passwords/opalescent.jpg');
-  
-    /* Control the height of the image */
-    min-height: 380px;
-  
-    /* Center and scale the image nicely */
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    position: relative;
-  }
 
-  .table-hover tbody tr:hover td {
-    background: blue;
-    color: white;
-  }
-    .table-hover tbody tr:hover a {
-      color: white
-    }
-  }
+#parent{position: relative;}
+.dark{background: black; top: 96px; left: 96px; position: absolute; height: 314px; width: 414px; z-index: 20;}
+.grey{background: grey; top: 100px; left: 100px; position: absolute; height: 300px; width: 400px; z-index: 30;}
+#parent img{max-width: 100%; height: auto;}
+.login a{color: white}
